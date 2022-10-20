@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:tags="http://www.springframework.org/security/tags">
+<head>
+  <meta charset="UTF-8">
+  <div tags:authorize="isAuthenticated()">
+    Logged as: <b th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b>
+    <form th:action="@{/logout}" method="POST">
+      <input type="submit" value="Logout"/>
+    </form>
+  </div>
+  <title>Update user info</title>
+</head>
+<body>
+<h2>User info</h2>
+
+
+<form th:method="PATH" th:action="@{/update}" th:object="${user}">
+
+  <input type="hidden" name="id" th:value="${user.id}"/>
+  <br/>
+  <label for="username">Enter username: </label>
+  <input type="text" th:field="*{username}" id="username"/>
+
+
+  <label for="password">Enter password: </label>
+  <input type="text" th:field="*{password}" id="password"/>
+
+  <label for="name">Enter name: </label>
+  <input type="text" th:field="*{name}" id="name"/>
+
+  <br/>
+  <label for="surname">Enter surname: </label>
+  <input type="text" th:field="*{surname}" id="surname"/>
+
+  <br/>
+  <label for="age">Enter age: </label>
+  <input type="text" th:field="*{age}" id="age"/>
+
+
+  <input type="submit" value="Update"/>
+</form>
+</body>
+</html>
