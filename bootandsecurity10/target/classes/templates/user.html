@@ -1,16 +1,24 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:tags="http://www.springframework.org/security/tags">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:tags="http://www.springframework.org/security/tags"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/security/tags ">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
 <head>
-    <meta charset="UTF-8">
-    <title>user info</title>
+  <meta charset="UTF-8">
+  <div class="bg-dark text-white">
+
   <div tags:authorize="isAuthenticated()">
-    Logged as: <b th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b>
+    Logged as: <b th:inline="text"> [[${#httpServletRequest.remoteUser}]]
     <form th:action="@{/logout}" method="POST">
       <input type="submit" value="Logout"/>
     </form>
   </div>
+  </div>
 </head>
 <body>
+
 <h2>user information</h2>
 
 <table class="table">
@@ -21,6 +29,12 @@
 <table>
 
   <tbody>
+  <ul class="list-group list-group-horizontal">
+    <li class="list-group-item">Cras justo odio</li>
+    <li class="list-group-item">Dapibus ac facilisis in</li>
+    <li class="list-group-item">Morbi leo risus</li>
+  </ul>
+
   <tr>
     <th>Username</th>
     <td th:text="${user.username}"/>

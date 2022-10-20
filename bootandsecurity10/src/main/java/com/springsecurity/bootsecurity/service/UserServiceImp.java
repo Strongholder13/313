@@ -32,8 +32,10 @@ public class UserServiceImp implements UserService {
 
 
     @Override
-    public void update(User user) {usersRepository.save(user); }
-
+    public void update(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        usersRepository.save(user);
+    }
     @Override
     public List<User> listUsers() {
         return usersRepository.findAll();

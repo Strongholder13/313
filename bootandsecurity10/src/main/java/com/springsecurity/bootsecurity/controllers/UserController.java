@@ -23,7 +23,10 @@ import javax.validation.Valid;
 public class UserController {
     private final UserService userService;
 
-
+//@GetMapping("/")
+//public String loginPage(@ModelAttribute("user") User user){
+//    return "/index";
+//}
     @Autowired
     public UserController(UserService userService, UserValidator userValidator) {
         this.userService = userService;
@@ -34,8 +37,9 @@ public class UserController {
 
 
     @GetMapping("/registration")
-    public String registrationPage(@ModelAttribute("user") User user){
+    public String registrationPage(@ModelAttribute("user") User user) {
         return "/registration";
+
     }
 
     @PostMapping("/registration")
