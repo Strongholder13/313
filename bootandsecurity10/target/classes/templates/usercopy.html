@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:tags="http://www.springframework.org/security/tags"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/security/tags ">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+<head>
+  <meta charset="UTF-8">
+
+
+    <div tags:authorize="isAuthenticated()">
+      Logged as: <b th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b>
+      <form th:action="@{/logout}" method="POST">
+        <input type="submit" value="Logout"/>
+      </form>
+    </div>
+
+
+
+</head>
+<body>
+
+<h2>user information</h2>
+
+<table class="table">
+  <br>
+
+</table>
+
+<table>
+
+  <tbody>
+
+  <tr>
+    <th>Username</th>
+    <td th:text="${user.username}"/>
+
+  </tr>
+
+  <tr>
+    <th>Name</th>
+    <td th:text="${user.name}"/>
+
+  </tr>
+  <tr>
+    <th>Surname</th>
+    <td th:text="${user.surname}"/>
+
+  </tr>
+  <tr>
+    <th>Age</th>
+    <td th:text="${user.age}"/>
+
+
+  <tr>
+    <th>Status</th>
+    <td th:text="${role}"/>
+
+  </tr>
+
+
+  </tbody>
+</table>
+<br>
+
+</body>
+</html>
