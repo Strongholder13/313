@@ -5,7 +5,9 @@ import org.springframework.lang.NonNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -41,9 +43,18 @@ public class User implements UserDetails {
     private List<Role> roles;
 
 
+//    private List<String> roleNames {
+//        roleNames = Collections.singletonList(roles.toString());
+//    };
 
-    public List<Role> getRoles() {
-         return roles;
+
+
+    public List<String> getRoleNames() {
+        List<String> roleNames = new ArrayList<>();
+        for (Role role : roles) {
+            roleNames.add(role.getRole());
+        }
+         return roleNames;
     }
 
     public User(int Id, @NonNull String username, String name, String surname, int age, @NonNull String password, List<Role> roles) {
@@ -54,11 +65,20 @@ public class User implements UserDetails {
         this.age = age;
         this.password = password;
         this.roles = roles;
+
     }
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
+//    public void setRole(String role) {
+//
+//        List<Role> roles = new ArrayList();
+//    Role newRole = new Role(user.getUsername(), role) ;
+//    roles.add(newRole);
+//    user.setRoles(roles);
+//        this.roles = roles;
+//    }
 
     public User() {
 
@@ -102,12 +122,13 @@ public class User implements UserDetails {
     @Override
     public String toString() {
         return "User{" +
-                ", id='" + id + '\'' +
-                ", username='" + username + '\'' +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
+                ", id='" + id +
+                ", username='" + username +
+                ", name='" + name +
+                ", surname='" + surname +
                 ", age=" + age +
                 ", password='" + password +
+                ", role='" + roles +
                 '}';
     }
 }

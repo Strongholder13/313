@@ -2,6 +2,7 @@ package com.springsecurity.bootsecurity.controllers;
 
 
 
+import com.springsecurity.bootsecurity.model.Role;
 import com.springsecurity.bootsecurity.model.User;
 import com.springsecurity.bootsecurity.service.UserService;
 import com.springsecurity.bootsecurity.util.UserValidator;
@@ -14,8 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
-
+import java.util.List;
 
 
 @Controller
@@ -37,51 +37,60 @@ public class UserController {
 
 
     @GetMapping("/registration")
-    public String registrationPage(@ModelAttribute("user") User user) {
-        return "/registration";
-
-    }
-
-    @PostMapping("/registration")
-    public String saveUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
-        userValidator.validate(user, bindingResult);
-        if (bindingResult.hasErrors()) {
-            return "/registration";
-        }
-        userService.add(user);
-        return "redirect:/admin";
-    }
-
-    @GetMapping("/admin")
-    public String index(Model model) {
-        model.addAttribute("allUsers", userService.listUsers());
+    public String registrationPage(@ModelAttribute("newUser") User user) {
         return "/admin";
     }
 
-    @GetMapping("/user")
-    public String showUserInfo(Model model){
+    @PostMapping("/registration")
+    public String saveUser(@ModelAttribute("newUser") @Valid User user, @ModelAttribute("newRole") String role, BindingResult bindingResult) {
+        userValidator.validate(user, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "/admin";
+        }
+        userService.add(user, role);
+        return "redirect:/admin";
+    }
+
+//    @PostMapping("/registration")
+//    public String saveUser(@ModelAttribute("user") @Valid User user, @RequestParam(value = "role", required = false) List<String> role) {
+////        userValidator.validate(user, bindingResult);
+////        if (bindingResult.hasErrors()) {
+////            return "/registration";
+// //       }
+//        userService.add(user, role);
+//        return "redirect:/admin";
+//    }
+
+    @GetMapping("/admin")
+    public String index(Model model) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findByUsername(authentication.getName());
-        model.addAttribute("user", user);
-        model.addAttribute("role", authentication.getName());
-        return "/user";
+        model.addAttribute("admin", userService.findByUsername(authentication.getName()));
+        model.addAttribute("users", userService.listUsers());
+        model.addAttribute("newUser", new User());
+        model.addAttribute("newRole", new Role());
 
+        //model.addAttribute("role", authentication.getName());
+        model.addAttribute("allRoles", userService.listRoles());
+
+
+
+        return "/admin";
     }
 
-    @GetMapping("/edit")
-    public String editeUser(@RequestParam("id") int id, Model model){
-        User user = userService.findById(id);
-        model.addAttribute("user", user);
-        return "/edit";
+
+    @PostMapping("/update/")
+    public String updateUser(@ModelAttribute("user") User user,
+                             @ModelAttribute("addRoles") List<String> addRole) {
+        if (addRole.isEmpty()) {
+            userService.update(user);
+        } else {
+            userService.update(user, addRole);
+        }
+        return "redirect:/admin";
     }
 
-    @PostMapping("/update")
-    public String updateUser(@ModelAttribute("user") User user){
-        userService.update(user);
-        return "redirect:/user";
-    }
-    @PostMapping ("/delete")
+    @DeleteMapping ("/delete")
     public String delete(@RequestParam("id") int id) {
         userService.delete(id);
         return "redirect:/admin";

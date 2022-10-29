@@ -4,7 +4,6 @@ import com.springsecurity.bootsecurity.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -14,26 +13,27 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final SuccessUserHandler successUserHandler;
     private final UserService userService;
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
+
+//    @Autowired
+//    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+//        this.passwordEncoder = passwordEncoder;
+//    }
+
 
     @Autowired
-    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+    public WebSecurityConfig(SuccessUserHandler successUserHandler, UserService myUserDetailService, PasswordEncoder passwordEncoder) {
+        this.successUserHandler = successUserHandler;
+        this.userService = myUserDetailService;
         this.passwordEncoder = passwordEncoder;
     }
 
-
-    @Autowired
-    public WebSecurityConfig(SuccessUserHandler successUserHandler, UserService myUserDetailService) {
-        this.successUserHandler = successUserHandler;
-        this.userService = myUserDetailService;
-    }
-
-
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService)
-                .passwordEncoder(passwordEncoder);
-
-    }
+//
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.userDetailsService(userService)
+//                .passwordEncoder(passwordEncoder);
+//
+//    }
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {

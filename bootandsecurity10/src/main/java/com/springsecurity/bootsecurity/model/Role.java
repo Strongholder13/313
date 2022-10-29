@@ -3,6 +3,8 @@ package com.springsecurity.bootsecurity.model;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -24,6 +26,23 @@ public class Role implements GrantedAuthority {
 
     public Role() {
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public List<String> getRoleNames() {
+        List<String> roleNames = new ArrayList();
+        for (Role role : user.getRoles()){
+            roleNames.add(role.getRole());
+        }
+        return roleNames;
+    }
+
 
     public Role(String username, String role) {
         this.username = username;
@@ -50,10 +69,11 @@ public class Role implements GrantedAuthority {
         return Objects.hash(username, role);
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
 
+    @Override
+    public String toString() {
+        return this.role.substring(5);
+    }
     @Override
     public String getAuthority() {
         return this.role;
