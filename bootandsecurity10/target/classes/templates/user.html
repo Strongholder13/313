@@ -1,31 +1,31 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:tags="http://www.springframework.org/security/tags"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.springframework.org/security/tags ">
 
 <head>
-
+  <title> INFO</title>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 
 </head>
 <header>
-  <title> INFO</title>
-  <div class="container-fluid">
-    <div class=row>
-      <div class="col-md-12 p-3 bg-dark text-white ">
-        <div tags:authorize="isAuthenticated()">
-          <b th:inline="text"> [[${#httpServletRequest.remoteUser}]] </b> with roles:<td><a th:each="role : ${user.getRoles()}">
-          <a th:text="${role.toString()}"></a>
-        </a></td>
-
-
-          <a th:href="@{/logout}" class="float-right text-light"> Logout </a>
-        </div>
-      </div>
+  <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
+    <div class="container-fluid me-auto">
+                <span class="navbar-brand">
+                    <strong th:utext="${user.getUsername()}"></strong>
+                     with roles:
+                    <span  th:each="role : ${user.getRoleNames()}">
+                        <a th:text="${role}"></a>
+                        </span>
+                </span>
     </div>
-  </div>
+    <span class="nav-item ms-auto">
+    <form th:action="@{/logout}" method="post">
+        <button type="submit" class="btn btn-dark">Logout</button>
+    </form>
+      </span>
+  </nav>
 
 </header>
 

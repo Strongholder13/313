@@ -52,7 +52,7 @@ public class User implements UserDetails {
     public List<String> getRoleNames() {
         List<String> roleNames = new ArrayList<>();
         for (Role role : roles) {
-            roleNames.add(role.getRole());
+            roleNames.add(role.getRole().substring(5));
         }
          return roleNames;
     }

@@ -51,15 +51,6 @@ public class UserController {
         return "redirect:/admin";
     }
 
-//    @PostMapping("/registration")
-//    public String saveUser(@ModelAttribute("user") @Valid User user, @RequestParam(value = "role", required = false) List<String> role) {
-////        userValidator.validate(user, bindingResult);
-////        if (bindingResult.hasErrors()) {
-////            return "/registration";
-// //       }
-//        userService.add(user, role);
-//        return "redirect:/admin";
-//    }
 
     @GetMapping("/admin")
     public String index(Model model) {
@@ -69,15 +60,17 @@ public class UserController {
         model.addAttribute("users", userService.listUsers());
         model.addAttribute("newUser", new User());
         model.addAttribute("newRole", new Role());
-
-        //model.addAttribute("role", authentication.getName());
+        model.addAttribute("currentUser", (User)userService.loadUserByUsername(authentication.getName()));
         model.addAttribute("allRoles", userService.listRoles());
-
-
-
         return "/admin";
     }
 
+    @GetMapping("/user")
+    public String indexUser(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        model.addAttribute("user", userService.loadUserByUsername(authentication.getName()));
+        return "/user";
+    }
 
     @PostMapping("/update/")
     public String updateUser(@ModelAttribute("user") User user,

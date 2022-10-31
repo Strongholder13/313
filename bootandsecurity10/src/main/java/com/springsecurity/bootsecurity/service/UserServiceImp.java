@@ -31,24 +31,6 @@ public class UserServiceImp implements UserService {
     }
 
 
-//    @Override
-//    public void add(User user, List<String> roles) {
-//        List<Role> role = new ArrayList();
-//        for (String rol :roles){
-//            if (rol.equals("ADMIN")){
-//                role.add(new Role(user.getUsername(),"ROLE_ADMIN" ));
-//            }
-//            if (rol.equals("USER")){
-//                role.add(new Role(user.getUsername(),"ROLE_USER" ));
-//            }
-//        }
-//
-//       // Role role1 = new Role(user.getUsername(), "ROLE_USER") ;
-//       // role.add(role1);
-//        user.setRoles(role);
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
-//        usersRepository.save(user);
-//    }
 @Override
 public void add(User user, String role) {
     List<Role> roles = new ArrayList();
@@ -61,13 +43,14 @@ public void add(User user, String role) {
 
     @Override
     public void update(User user, List<String> rolesNames) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        usersRepository.save(user);
         List<Role> roles = new ArrayList();
-        for (String roleName : rolesNames){
+        for (String roleName : rolesNames) {
             roles.add(new Role(user.getUsername(), roleName));
         }
         user.setRoles(roles);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        usersRepository.save(user);
+
     }
 
 
