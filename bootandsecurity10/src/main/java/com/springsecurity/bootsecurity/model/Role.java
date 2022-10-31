@@ -43,7 +43,6 @@ public class Role implements GrantedAuthority {
         return roleNames;
     }
 
-
     public Role(String username, String role) {
         this.username = username;
         this.role = role;
@@ -68,7 +67,6 @@ public class Role implements GrantedAuthority {
     public int hashCode() {
         return Objects.hash(username, role);
     }
-
 
     @Override
     public String toString() {

@@ -15,25 +15,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
-//    @Autowired
-//    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
-//        this.passwordEncoder = passwordEncoder;
-//    }
-
-
     @Autowired
     public WebSecurityConfig(SuccessUserHandler successUserHandler, UserService myUserDetailService, PasswordEncoder passwordEncoder) {
         this.successUserHandler = successUserHandler;
         this.userService = myUserDetailService;
         this.passwordEncoder = passwordEncoder;
     }
-
-//
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(userService)
-//                .passwordEncoder(passwordEncoder);
-//
-//    }
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
@@ -61,8 +48,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/login")
                 .permitAll();
-
-
     }
 }
 

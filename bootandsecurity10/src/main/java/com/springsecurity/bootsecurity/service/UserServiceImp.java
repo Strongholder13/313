@@ -30,30 +30,25 @@ public class UserServiceImp implements UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-
 @Override
 public void add(User user, String role) {
     List<Role> roles = new ArrayList();
+    if (role == null){role = "ROLE_NOROLE";}
     Role newRole = new Role(user.getUsername(), role) ;
     roles.add(newRole);
     user.setRoles(roles);
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     usersRepository.save(user);
 }
-
     @Override
-    public void update(User user, List<String> rolesNames) {
-        List<Role> roles = new ArrayList();
-        for (String roleName : rolesNames) {
-            roles.add(new Role(user.getUsername(), roleName));
-        }
+    public void update(User user, String roleName) {
+        List<Role> roles = user.getRoles();
+        roles.add(new Role(user.getUsername(), roleName));
         user.setRoles(roles);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         usersRepository.save(user);
 
     }
-
-
     @Override
     public void update(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -73,49 +68,15 @@ public void add(User user, String role) {
         }
         return roleNames;
     }
-
-    @Override
-    public List<String> userListRole(String username) {
-
-        List<Role> roleList = rolesRepository.findAllById(Collections.singleton((username)));
-        List<String> roleNames = new ArrayList<>();
-        for (Role role : roleList){
-            roleNames.add(role.getRole());
-        }
-        return roleNames;
-    }
-
-
-    @Override
-    public User findById(int id) {
-        Optional<User> user = usersRepository.findById(id);
-        return user.orElse(null);
-    }
-
-    @Override
-    public List<String> findRole(List<String> shortNames) {
-        List<String> roleList = new ArrayList<>();
-        for (String role : listRoles()) {
-            if (shortNames.contains(role)){
-                roleList.add(role);
-            }
-        }
-        return roleList;
-    }
-
-
     @Override
     public void delete(int id) {
         usersRepository.deleteById(id);
     }
-
-
     @Override
     public User findByUsername(String username) {
         Optional<User> user = usersRepository.findByUsername(username);
         return user.orElse(null);
     }
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = usersRepository.findByUsername(username);
