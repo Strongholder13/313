@@ -107,12 +107,12 @@
                         <td>
 
                             <!-- Button edit -->
-                            <button type="button" class="btn btn-info" data-toggle="modal" th:href="${'#edit'+ ussr.id}">
+                            <button type="button" class="btn btn-info" data-toggle="modal" th:href="${'#edit'}">
                                 Edit
                             </button>
 
                             <!-- Modal edit -->
-                            <div class="modal fade" th:id="${'edit'+ ussr.id}"
+                            <div class="modal fade" th:id="${'edit'}"
                                   data-backdrop="static"
                                   data-keyboard="false" tabindex="-1"
 
@@ -131,7 +131,7 @@
                                                 <form th:method="POST"
                                                       th:action="@{/update}"
 
-                                                      th:id="${'editForm' + ussr.id}">
+                                                      th:id="${'editForm'}">
                                                     <div class="form-group text-center">
                                                         <label for="edit-id"><strong>ID</strong></label>
                                                         <input type="text" class="form-control" id="edit-id" readonly th:value="${ussr.id}">
