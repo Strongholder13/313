@@ -198,7 +198,7 @@
                               </div>
                               <div class="modal-body">
                                 <div class="col-md-8 mx-auto">
-                                    <form th:method="Delete" th:action="@{/delete(id=${ussr.id})}">
+                                    <form th:method="Delete" th:action="@{/delete{id}(id=${ussr.id})}">
                                     <div class="form-group text-center">
                                       <label for="id"><strong>ID</strong></label>
                                       <input type="text" class="form-control" id="id" readonly th:value="${ussr.id}">
@@ -292,18 +292,6 @@
                       <option th:value="ROLE_USER">USER</option>
                     </select>
                     </div>
-<!--                      <div class="row justify-content-center">-->
-<!--                          <div class="col-3">-->
-<!--                              <select multiple class="form-control" size="2" th:name="role" th:id="role">-->
-<!--                                  <option value="">no role</option>-->
-<!--                                  <option th:each="rol:${allRoles}"-->
-<!--                                          th:value="${rol}"-->
-<!--                                          th:text="${rol.substring(5)}">-->
-<!--                                      &lt;!&ndash;                                                                th:selected="${user.roles.contains(rol)}">&ndash;&gt;-->
-<!--                                  </option>-->
-<!--                              </select>-->
-<!--                          </div>-->
-<!--                      </div>-->
                     <div class="form-group text-center">
                     <button type="submit" value="Save" class="btn btn-success">Add new user</button>
 

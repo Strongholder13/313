@@ -198,7 +198,7 @@
                               </div>
                               <div class="modal-body">
                                 <div class="col-md-8 mx-auto">
-                                    <form th:method="Delete" th:action="@{/delete(id=${ussr.id})}">
+                                    <form th:method="Delete" th:action="@{/delete{id}(id=${ussr.id})}">
                                     <div class="form-group text-center">
                                       <label for="id"><strong>ID</strong></label>
                                       <input type="text" class="form-control" id="id" readonly th:value="${ussr.id}">

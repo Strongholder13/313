@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -29,7 +30,7 @@ public class UserServiceImp implements UserService {
         this.rolesRepository = rolesRepository;
         this.passwordEncoder = passwordEncoder;
     }
-
+@Transactional
 @Override
 public void add(User user, String role) {
     List<Role> roles = new ArrayList();
@@ -40,6 +41,7 @@ public void add(User user, String role) {
     user.setPassword(passwordEncoder.encode(user.getPassword()));
     usersRepository.save(user);
 }
+    @Transactional
     @Override
     public void update(User user, String roleName) {
         List<Role> roles = user.getRoles();
@@ -49,6 +51,7 @@ public void add(User user, String role) {
         usersRepository.save(user);
 
     }
+    @Transactional
     @Override
     public void update(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -68,6 +71,7 @@ public void add(User user, String role) {
         }
         return roleNames;
     }
+    @Transactional
     @Override
     public void delete(int id) {
         usersRepository.deleteById(id);
